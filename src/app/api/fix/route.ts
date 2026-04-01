@@ -3,6 +3,21 @@ import { NextResponse } from "next/server";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
+// handling cors preflight requests
+
+export async function OPTIONS() {
+  return NextResponse.json(
+    {},
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    },
+  );
+}
+
 export async function POST(req: Request) {
   try {
     const { text } = await req.json();
@@ -40,7 +55,14 @@ export async function POST(req: Request) {
     if (!responseText) {
       throw new Error("AI returned an empty response.");
     }
-    return NextResponse.json(JSON.parse(responseText));
+    return (
+      NextResponse.json(JSON.parse(responseText)),
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
   } catch (error: any) {
     console.error("Groq AI Error:", error);
     return NextResponse.json(
