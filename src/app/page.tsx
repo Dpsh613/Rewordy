@@ -38,12 +38,16 @@ export default function Home() {
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
   return (
     <div
       className={`h-[100dvh] w-full flex items-center justify-center p-4 sm:p-6 transition-colors duration-700 ease-in-out overflow-hidden ${t.bg}`}
     >
       <div
-        className={`max-w-xl w-full max-h-[100dvh] sm:max-h-[90dvh] flex flex-col rounded-[2rem] shadow-2xl p-6 sm:p-10 relative border transition-colors duration-700 ease-in-out ${t.card} ${t.border}`}
+        className={`max-w-[92%] sm:max-w-xl w-full max-h-[85dvh] sm:max-h-[90dvh] flex flex-col rounded-[2.5rem] shadow-2xl p-6 sm:p-10 relative border transition-colors duration-700 ease-in-out ${t.card} ${t.border}`}
       >
         {/* Theme Switcher Dots */}
         <div className="absolute top-8 right-8 flex gap-2.5 z-10">
@@ -118,6 +122,26 @@ export default function Home() {
               >
                 Corrected
               </span>
+              <button
+                onClick={() => copyToClipboard(result.corrected)}
+                className={`p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white/10 ${t.accentText}`}
+                title="Copy to clipboard"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
               <p
                 className={`text-2xl mt-3 leading-relaxed font-medium ${t.accentText}`}
               >
