@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💫 Rewordy
 
-## Getting Started
+**Say what you mean — in better words.**
 
-First, run the development server:
+Rewordy is a tiny AI-powered writing assistant that helps you express thoughts clearly and naturally.  
+Whether your English feels choppy, mixed with another language, or just not *quite right*, Rewordy gives you corrected sentences, explanations, and alternatives instantly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔍 Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The live version is deployed at:  
+🌐 https://rewordy.vercel.app/
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open the page, type anything — broken English, Hindi phrases, mixed thoughts — and hit **Make it better**.
 
-## Learn More
+You’ll get:
 
-To learn more about Next.js, take a look at the following resources:
+- ✔️ A corrected sentence  
+- 🧠 Simple explanation of what was off  
+- ✨ 3–4 better alternatives
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Why Rewordy Exists
 
-## Deploy on Vercel
+Most writing tools either:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Teach you grammar (courses)
+- Translate literally (Google Translate)
+- Paraphrase without explanation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+But **Rewordy focuses on expression** — helping you say what you actually mean in natural language.  
+This is especially helpful for non-native speakers who want **confidence and clarity** in everyday writing.
+
+---
+
+## 📦 Features
+
+- 🤖 AI-powered corrections and suggestions
+- 📘 Explanation of mistakes (so you learn as you go)
+- 💡 Multiple alternative phrasing options
+- 🌍 Understands mixed and foreign phrases
+- 🖤 Clean, minimal dark interface
+
+---
+
+## 🧠 Tech Stack
+
+- **Frontend:** Next.js + Tailwind CSS  
+- **Backend:** Groq API  
+- **Deployment:** Vercel  
+- **No database, no clutter — just utility.**
