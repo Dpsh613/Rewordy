@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // handling cors preflight requests
-
 export async function OPTIONS() {
   return NextResponse.json(
     {},
@@ -55,19 +54,19 @@ export async function POST(req: Request) {
     if (!responseText) {
       throw new Error("AI returned an empty response.");
     }
-    return (
-      NextResponse.json(JSON.parse(responseText)),
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    );
+    
+    // FIX: The headers object is now the second argument of NextResponse.json()
+    return NextResponse.json(JSON.parse(responseText), {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
   } catch (error: any) {
     console.error("Groq AI Error:", error);
     return NextResponse.json(
       { error: "Failed to process text. Please try again." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
