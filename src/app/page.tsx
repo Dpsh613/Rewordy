@@ -22,7 +22,7 @@ const CopyButton = ({
   return (
     <button
       onClick={handleCopy}
-      className={`p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white/10 ${className}`}
+      className={`p-2 rounded-lg transition-all duration-200 hover:bg-white/10 ${className}`}
       title="Copy to clipboard"
     >
       {copied ? (
