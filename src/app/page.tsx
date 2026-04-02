@@ -1,7 +1,38 @@
 "use client";
 import { useState } from "react";
-// Adjust the import path based on where you saved the file!
 import { THEMES, ThemeKey } from "@/lib/themes";
+import { Copy, Check } from "lucide-react";
+
+// 1. Extracted CopyButton component so each button handles its own Checkmark state
+const CopyButton = ({
+  text,
+  className = "",
+}: {
+  text: string;
+  className?: string;
+}) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Changes back to Copy icon after 2 seconds
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className={`p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white/10 ${className}`}
+      title="Copy to clipboard"
+    >
+      {copied ? (
+        <Check className="w-4 h-4 text-emerald-400" />
+      ) : (
+        <Copy className="w-4 h-4" />
+      )}
+    </button>
+  );
+};
 
 export default function Home() {
   const [theme, setTheme] = useState<ThemeKey>("onyx");
@@ -38,16 +69,12 @@ export default function Home() {
     }
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
-
   return (
     <div
       className={`h-[100dvh] w-full flex items-center justify-center p-4 sm:p-6 transition-colors duration-700 ease-in-out overflow-hidden ${t.bg}`}
     >
       <div
-        className={`max-w-[88%] sm:max-w-xl w-full max-h-[85dvh] sm:max-h-[90dvh] flex flex-col rounded-[2.5rem] shadow-2xl p-5 sm:p-10 relative border transition-colors duration-700 ease-in-out ${t.card} ${t.border}`}
+        className={`max-w-[92%] sm:max-w-xl w-full max-h-[85dvh] sm:max-h-[90dvh] flex flex-col rounded-[2.5rem] shadow-2xl p-6 sm:p-10 relative border transition-all duration-700 ease-in-out hover:scale-[1.01] ${t.card} ${t.border}`}
       >
         {/* Theme Switcher Dots */}
         <div className="absolute top-8 right-8 flex gap-2.5 z-10">
@@ -55,7 +82,7 @@ export default function Home() {
             <button
               key={key}
               onClick={() => setTheme(key)}
-              className={`w-4 h-4 rounded-full  hover:scale-110 transition-all duration-300 ${THEMES[key].dot} ${
+              className={`w-3.5 h-3.5 rounded-full transition-all duration-300 ${THEMES[key].dot} ${
                 theme === key
                   ? "ring-2 ring-offset-2 ring-offset-transparent ring-white/30 scale-110"
                   : "opacity-30 hover:opacity-100"
@@ -111,38 +138,23 @@ export default function Home() {
 
         {/* Output Cards - SCROLLABLE AREA */}
         {result && !error && result.alternatives && (
-          <div className=" group relative mt-6 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out flex-1 overflow-y-auto min-h-0 pr-2 pb-2">
+          <div className="mt-6 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out flex-1 overflow-y-auto min-h-0 pr-2 pb-2">
             {/* Corrected Version */}
             <div
-              className={`p-6 rounded-2xl transition-colors duration-700 border ${t.accentBg} ${t.border}`}
+              className={`p-6 rounded-2xl transition-colors duration-700 border relative group ${t.accentBg} ${t.border}`}
             >
-              <span
-                className={`text-xs font-bold uppercase tracking-wider ${t.accentLabel}`}
-              >
-                Corrected
-              </span>
-              <button
-                onClick={() => copyToClipboard(result.corrected)}
-                className={`absolute top-4 right-4 p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white/10 ${t.accentText}`}
-                title="Copy to clipboard"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              <div className="flex justify-between items-start">
+                <span
+                  className={`text-xs font-bold uppercase tracking-wider ${t.accentLabel}`}
                 >
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-              </button>
+                  Corrected
+                </span>
+
+                <CopyButton text={result.corrected} className={t.accentText} />
+              </div>
+
               <p
-                className={`text-2xl mt-3 leading-relaxed font-medium ${t.accentText}`}
+                className={`text-2xl mt-1 leading-relaxed font-medium pr-6 ${t.accentText}`}
               >
                 {result.corrected}
               </p>
@@ -171,40 +183,19 @@ export default function Home() {
                 {result.alternatives.map((alt: string, i: number) => (
                   <li
                     key={i}
-                    className={`group flex items-start text-base leading-relaxed ${t.textMain}`}
+                    className={`group flex items-start justify-between text-base leading-relaxed ${t.textMain}`}
                   >
-                    <div className="flex items-start">
+                    <div className="flex items-start mt-1.5">
                       <span
                         className={`mr-3 mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-700 ${t.dot}`}
                       ></span>
-                      {alt}
+                      <span className="pr-4">{alt}</span>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(alt)}
-                      className="ml-3 p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition hover:bg-white/10"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect
-                          x="9"
-                          y="9"
-                          width="13"
-                          height="13"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                      </svg>
-                    </button>
+
+                    <CopyButton
+                      text={alt}
+                      className={`text-zinc-400 hover:${t.textMain} shrink-0`}
+                    />
                   </li>
                 ))}
               </ul>
